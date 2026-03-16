@@ -1,0 +1,16 @@
+body{
+    font-family: Arial;
+    padding: 40px;
+}
+.box{
+    width: 300px;
+    border: 1px solid black;
+    padding: 20px;
+}
+input{
+    width: 150px;
+    padding: 5px;
+}
+#error{
+    color: red;
+}
