@@ -3,14 +3,16 @@
         <title>Gender</title>
     </head>
     <body>
-        <form>
+        <form onsubmit="return validateGender()">
             <fieldset>
                 <legend>Gender</legend>
-               <input type="radio" name="" />Male
-               <input type="radio" name="" />Female
-               <input type="radio" name="" />Other<br>
-               <input type="button" name="" value="Submit" />
+               <input type="radio" name="gender" />Male
+               <input type="radio" name="gender" />Female
+               <input type="radio" name="gender" />Other<br>
+               <p id ="error" style="color:red"></p>
+               <input type="submit" name="" value="Submit" />
             </fieldset>
         </form>
+        <script src="script.js"></script>
     </body>
 </html>
