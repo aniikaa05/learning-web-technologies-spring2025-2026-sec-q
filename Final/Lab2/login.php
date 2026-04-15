@@ -1,45 +1,26 @@
 <?php
 session_start();
+if (!isset($_SESSION['users'])) {
+    $_SESSION['users'] = [
+        "admin" => "1234",
+        "user"  => "pass"
+    ];
+}
 
-if(isset($_POST['submit'])){
+if (isset($_POST['submit'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    $file = fopen("data.txt", "r");
-
-    while(!feof($file)){
-        $line = fgets($file);
-
-        if($line != ""){
-            $line = trim($line);
-
-            $u = "";
-            $p = "";
-            $found = false;
-            for($i = 0; $i < strlen($line); $i++){
-                if($line[$i] == ","){
-                    $found = true;
-                    continue;
-                }
-
-                if($found == false){
-                    $u = $u . $line[$i];
-                } else {
-                    $p = $p . $line[$i];
-                }
-            }
-
-            if($u == $username && $p == $password){
-                $_SESSION['user'] = $username;
-                header("Location: dashboard.php");
-                exit();
-            }
-        }
+    if (
+        isset($_SESSION['users'][$username]) &&
+        $_SESSION['users'][$username] == $password
+    ) {
+        $_SESSION['user'] = $username;
+        header("Location: dashboard.php");
+        exit();
+    } else {
+        echo "Invalid User!";
     }
-
-    fclose($file);
-
-    echo "Invalid User!";
 }
 ?>
 

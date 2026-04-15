@@ -1,13 +1,28 @@
 <?php
-if(isset($_POST['submit'])){
+session_start();
+
+if (!isset($_SESSION['users'])) {
+    $_SESSION['users'] = [];
+}
+
+if (isset($_POST['submit'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
+    $confirm  = $_POST['confirm'];
 
-    $file = fopen("data.txt", "a"); 
-    fwrite($file, $username . "," . $password . "\n");
-    fclose($file);
-
-    echo "Registration Successful!";
+    if ($username == "" || $password == "") {
+        echo "Fields cannot be empty!";
+    }
+    elseif ($password != $confirm) {
+        echo "Password does not match!";
+    }
+    elseif (isset($_SESSION['users'][$username])) {
+        echo "User already exists!";
+    }
+    else {
+        $_SESSION['users'][$username] = $password;
+        echo "Registration Successful!";
+    }
 }
 ?>
 
@@ -34,14 +49,15 @@ if(isset($_POST['submit'])){
 <form method="post">
 Name: <input type="text"><br><br>
 Email: <input type="email"><br><br>
+
 User Name: <input type="text" name="username"><br><br>
 Password: <input type="password" name="password"><br><br>
-Confirm Password: <input type="password"><br><br>
+Confirm Password: <input type="password" name="confirm"><br><br>
 
 Gender:
-<input type="radio"> Male
-<input type="radio"> Female
-<input type="radio"> Other
+<input type="radio" name="gender" value="Male"> Male
+<input type="radio" name="gender" value="Female"> Female
+<input type="radio" name="gender" value="Other"> Other
 <br><br>
 
 Date of Birth:
