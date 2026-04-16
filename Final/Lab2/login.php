@@ -1,67 +1,26 @@
 <?php
 session_start();
-if (!isset($_SESSION['users'])) {
-    $_SESSION['users'] = [
-        "admin" => "1234",
-        "user"  => "pass"
-    ];
-}
-
-if (isset($_POST['submit'])) {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-
-    if (
-        isset($_SESSION['users'][$username]) &&
-        $_SESSION['users'][$username] == $password
-    ) {
-        $_SESSION['user'] = $username;
-        header("Location: dashboard.php");
-        exit();
+if(isset($_POST['submit'])){
+    if(isset($_SESSION['user']) && $_POST['username'] == $_SESSION['user']['username'] && $_POST['password'] == $_SESSION['user']['password']){
+        $_SESSION['status'] = "active";
+        if(isset($_POST['remember'])){
+            setcookie('username', $_POST['username'], time()+3600, "/");
+        }
+        header('location: dashboard.php');
     } else {
-        echo "Invalid User!";
+        echo "Invalid username or password";
     }
 }
+include('header.php');
 ?>
-
-<html>
-<body>
-
-<table border="1" width="600" align="center">
-<tr>
-<td>
-<b>X Company</b>
-<span style="float:right;">
-<a href="index.php">Home</a> |
-<a href="login.php">Login</a> |
-<a href="register.php">Registration</a>
-</span>
-</td>
-</tr>
-
-<tr>
-<td>
-<center>
-<h3>LOGIN</h3>
-
-<form method="post">
-User Name: <input type="text" name="username"><br><br>
-Password: <input type="password" name="password"><br><br>
-
-<input type="checkbox"> Remember Me<br><br>
-
-<input type="submit" name="submit" value="Submit">
-<a href="forgot.php">Forgot Password?</a>
+<form method="POST">
+    <fieldset>
+        <legend><b>LOGIN</b></legend>
+        User Name : <input type="text" name="username"><br>
+        Password : <input type="password" name="password"><hr>
+        <input type="checkbox" name="remember"> Remember Me <br><br>
+        <input type="submit" name="submit" value="Submit">
+        <a href="forgot_password.php">Forgot Password?</a>
+    </fieldset>
 </form>
-
-</center>
-</td>
-</tr>
-
-<tr>
-<td align="center">Copyright © 2017</td>
-</tr>
-</table>
-
-</body>
-</html>
+<?php include('footer.php'); ?>
