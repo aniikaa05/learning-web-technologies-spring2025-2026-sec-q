@@ -2,6 +2,11 @@
 $email="";
 if(isset($_POST["email"])){
     $email=$_POST["email"];
+
+    if($email != ""){
+    echo "Email: " .$email;
+    }
+
 }
 ?>
 
@@ -9,12 +14,8 @@ if(isset($_POST["email"])){
     <body>
         <form method="post">
             Email: <input type="text" name="email" value="<?php echo $email; ?>">
-            <input type="submit">
+            <input type="submit" name="submit" value="Submit">
 </form>
-<?php
-if($email != ""){
-    echo "Email: " .$email;
-}
-?>
+
 </body>
 </html>
