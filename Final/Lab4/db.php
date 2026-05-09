@@ -1,7 +1,6 @@
 <?php
-$conn = new mysqli("localhost", "root", "", "webtech");
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+$conn = new mysqli("localhost","root","","shop_management");
+if(!$conn){
+    echo "DB connection error";
 }
 ?>

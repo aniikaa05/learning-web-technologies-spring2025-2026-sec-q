@@ -1,25 +1,35 @@
 <?php
 session_start();
-include 'db.php';
-
+include('db.php');
 if(isset($_POST['login'])){
-    $user = $_POST['username'];
-    $pass = $_POST['password'];
+    $username = $_POST['username'];
+    $password = $_POST['password'];
 
-    $sql = "SELECT * FROM users WHERE username='$user' AND password='$pass'";
-    $result = $conn->query($sql);
-
-    if($result->num_rows > 0){
-        $_SESSION['user'] = $user;
-        header("Location: dashboard.php");
-    } else {
-        echo "Invalid Login!";
+    $sql = "SELECT * FROM admin WHERE username='$username' AND password='$password'";
+    $result = mysqli_query($conn, $sql);
+    
+if(mysqli_num_rows($result)>0){
+    $_SESSION['username'] = $username;
+    header("Location: dashboard.php");
+}
+else{
+        echo "Invalid username or password!";
     }
 }
+
 ?>
 
-<form method="POST">
-    Username: <input type="text" name="username"><br>
-    Password: <input type="password" name="password"><br>
-    <button name="login">Login</button>
+<html>
+<body>
+    <h2 align="center">ADMIN LOGIN</h2>
+    <form method="post" action="">
+        <fieldset>
+        <legend>Admin Login</legend>
+        Username: <input type= "text" name ="username" required><br>
+        Password: <input type= "password" name="password" required><br>
+        <input type = "submit" name ="login" value="Login">
+        <a href="register.php">Create Account</a>
+</fieldset>
 </form>
+</body>
+</html>
